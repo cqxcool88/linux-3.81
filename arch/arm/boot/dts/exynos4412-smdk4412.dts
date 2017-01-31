@@ -24,7 +24,8 @@
 	};
 
 	chosen {
-		bootargs ="root=/dev/ram0 rw ramdisk=8192 initrd=0x41000000,8M console=ttySAC2,115200 init=/linuxrc earlyprintk";
+/*		bootargs ="root=/dev/ram0 rw ramdisk=8192 initrd=0x41000000,8M console=ttySAC2,115200 init=/linuxrc earlyprintk";*/
+		bootargs = "root=/dev/ram0 rw rootfstype=ext4 console=ttySAC2,115200 init=/linuxrc earlyprintk";
 	};
 
 	serial@13800000 {
