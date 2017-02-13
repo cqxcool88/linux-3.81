@@ -24,8 +24,104 @@
 	};
 
 	chosen {
-/*		bootargs ="root=/dev/ram0 rw ramdisk=8192 initrd=0x41000000,8M console=ttySAC2,115200 init=/linuxrc earlyprintk";*/
-		bootargs = "root=/dev/ram0 rw rootfstype=ext4 console=ttySAC2,115200 init=/linuxrc earlyprintk";
+		bootargs = "root=/dev/ram0 rw rootfstype=ext4 console=ttySAC2,115200 ethmac=1C:6F:65:34:51:7E init=/linuxrc earlyprintk";
+	};
+
+/*	usb-hub {
+		compatible = "smsc,usb4640";
+		reset-gpios = <&gpm2 4 0>;
+//		initial-mode = <;USB4640_MODE_HUB>;
+	};
+
+	usbphy:usbphy@125B0000{
+        	#address-cells=<1>;
+        	#size-cells=<1>;
+                   compatible="samsung,exynos4x12-usb2phy";
+                   reg=<0x125B0000 0x100>;
+                   ranges;
+
+                   clocks=<&clock 2>,<&clock 305>;
+                   clock-names="xusbxti","otg";
+
+                   usbphy-sys{
+                        reg=<0x10020704 0x8 0x1001021c 0x4>;
+                   };
+	};
+	
+	ehci@12580000{
+            status="okay";
+            usbphy=<&usbphy>;
+        };
+
+       	usb3503@08{
+            compatible="smsc,usb3503";
+            reg=<0x08 0x4>;
+            connect-gpios=<&gpm3 3 1>;
+            intn-gpios=<&gpx2 3 1>;
+            reset-gpios=<&gpm2 4 1>;
+            initial-mode=<1>;
+       	};
+*/
+	regulators {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		mmc_reg: regulator@0{
+			compatible = "regulator-fixed";
+			reg = <0>;
+			regulator-name = "VMEM_VDD_2.8V";
+			regulator-min-microvolt = <2800000>;
+			regulator-max-microvolt = <2800000>;
+			enable-active-high;
+		};
+		mmc_reg1: regulator@1{
+			compatible = "regulator-fixed";
+			reg = <1>;
+			regulator-name = "VMEM_VDD_1.8V";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			enable-active-high;
+			regulator-always-on;
+		 };
+	};
+
+	rtc@10070000 {
+		status = "okay";
+	};
+
+/*	edhci@12530000 {
+		compatible = "samsung,exynos4210-sdhci";
+		reg = <0x12530000 0x100>;
+		interrupts = <0 96 0>;
+		bus-width = <4>;
+		pinctrl-0 = <&sd2_clk &sd2_cmd &sd2_cd &sd2_bus4>;
+		pinctrl-names = "default";
+		vmmc-supply = <&mmc_reg>;
+		vqmmc-supply = <&mmc_reg1>;
+		cap-sd-highspeed;
+		status = "okay";
+	};
+*/
+	sdhci@12530000 {
+		compatible = "samsung,exynos4210-sdhci";
+		reg = <0x12530000 0x100>;
+		interrupts = <0 75 0>;
+		bus-width = <4>;
+		cd-gpios = <&gpk2 2 2 3 3>;
+
+		/* Samsung GPIO variant */
+		gpios = <&gpk2 0 2 0 3>,  /* clock line */
+			<&gpk2 1 2 0 3>,  /* command line */
+			<&gpk2 3 2 3 3>,  /* data line 0 */
+			<&gpk2 4 2 3 3>,  /* data line 1 */
+			<&gpk2 5 2 3 3>,  /* data line 2 */
+			<&gpk2 6 2 3 3>;  /* data line 3 */
+
+		/* Pinctrl variant */
+		pinctrl-0 = <&sd0_clk &sd0_cmd &sd0_bus4>;
+		pinctrl-names = "default";
+		status = "okay";
 	};
 
 	serial@13800000 {
@@ -40,7 +136,29 @@
 		status = "okay";
 	};
 
-	serial@13830000 {
-		status = "okay";
+/*	mmc@12550000 {
+	compatible = "samsung,exynos4412-dw-mshc";
+		reg = <0x12550000 0x1000>;
+		interrupts = <0 77 0>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		fifo-depth = <0x80>;
+		clocks = <&clock 301>, <&clock 149>;
+		clock-names = "biu", "ciu";
+	num-slots = <1>;
+	broken-cd;
+	non-removable;
+	card-detect-delay = <200>;
+	vmmc-supply = <&mmc_reg>;
+	clock-frequency = <400000000>;
+	samsung,dw-mshc-ciu-div = <0>;
+	samsung,dw-mshc-sdr-timing = <2 3>;
+	samsung,dw-mshc-ddr-timing = <1 2>;
+	pinctrl-0 = <&sd4_clk &sd4_cmd &sd4_bus4 &sd4_bus8>;
+	pinctrl-names = "default";
+	status = "okay";
+	bus-width = <8>;
+	cap-mmc-highspeed;
 	};
+*/
 };

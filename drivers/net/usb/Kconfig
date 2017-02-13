@@ -505,6 +505,9 @@ config USB_VL600
 	  4G modem from Verizon:
 
 	  http://ubuntuforums.org/showpost.php?p=10589647&postcount=17
-
+config USB_NET_DM9620
+	boolean "DM9620"
+	default y
+	help
 
 endmenu

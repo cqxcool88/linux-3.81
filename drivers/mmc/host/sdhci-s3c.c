@@ -703,6 +703,7 @@ static int sdhci_s3c_probe(struct platform_device *pdev)
 	case 8:
 		host->mmc->caps |= MMC_CAP_8_BIT_DATA;
 	case 4:
+
 		host->mmc->caps |= MMC_CAP_4_BIT_DATA;
 		break;
 	}
@@ -745,6 +746,8 @@ static int sdhci_s3c_probe(struct platform_device *pdev)
 		pm_runtime_get_noresume(&pdev->dev);
 		goto err_req_regs;
 	}
+else{
+}
 
 	/* The following two methods of card detection might call
 	   sdhci_s3c_notify_change() immediately, so they can be called
@@ -754,7 +757,6 @@ static int sdhci_s3c_probe(struct platform_device *pdev)
 	if (pdata->cd_type == S3C_SDHCI_CD_GPIO &&
 	    gpio_is_valid(pdata->ext_cd_gpio))
 		sdhci_s3c_setup_card_detect_gpio(sc);
-
 #ifdef CONFIG_PM_RUNTIME
 	if (pdata->cd_type != S3C_SDHCI_CD_INTERNAL)
 		clk_disable_unprepare(sc->clk_io);
