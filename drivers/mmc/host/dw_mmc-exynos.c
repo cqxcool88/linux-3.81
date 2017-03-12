@@ -219,6 +219,7 @@ static const struct dw_mci_drv_data exynos5250_drv_data = {
 };
 
 static const struct of_device_id dw_mci_exynos_match[] = {
+	{ .compatible = "samsung,exynos4412-dw-mshc",},
 	{ .compatible = "samsung,exynos5250-dw-mshc",
 			.data = &exynos5250_drv_data, },
 	{},
@@ -229,7 +230,7 @@ int dw_mci_exynos_probe(struct platform_device *pdev)
 {
 	const struct dw_mci_drv_data *drv_data;
 	const struct of_device_id *match;
-
+printk("dw_mci!!!\n");
 	match = of_match_node(dw_mci_exynos_match, pdev->dev.of_node);
 	drv_data = match->data;
 	return dw_mci_pltfm_register(pdev, drv_data);

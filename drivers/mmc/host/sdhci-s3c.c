@@ -569,7 +569,7 @@ static int sdhci_s3c_probe(struct platform_device *pdev)
 		dev_err(dev, "no device data specified\n");
 		return -ENOENT;
 	}
-
+/* request interrupt */
 	irq = platform_get_irq(pdev, 0);
 	if (irq < 0) {
 		dev_err(dev, "no irq specified\n");
@@ -649,7 +649,7 @@ static int sdhci_s3c_probe(struct platform_device *pdev)
 #ifndef CONFIG_PM_RUNTIME
 	clk_prepare_enable(sc->clk_bus[sc->cur_clk]);
 #endif
-
+/* get resource  */
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	host->ioaddr = devm_request_and_ioremap(&pdev->dev, res);
 	if (!host->ioaddr) {
