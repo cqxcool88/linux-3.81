@@ -569,17 +569,26 @@ static int sdhci_s3c_probe(struct platform_device *pdev)
 		dev_err(dev, "no device data specified\n");
 		return -ENOENT;
 	}
+	else{
+		printk("sdhci:get device data!\n");
+	}
 /* request interrupt */
 	irq = platform_get_irq(pdev, 0);
 	if (irq < 0) {
 		dev_err(dev, "no irq specified\n");
 		return irq;
 	}
+	else{
+		printk("sdhci:get irq!\n");
+	}
 
 	host = sdhci_alloc_host(dev, sizeof(struct sdhci_s3c));
 	if (IS_ERR(host)) {
 		dev_err(dev, "sdhci_alloc_host() failed\n");
 		return PTR_ERR(host);
+	}
+	else{
+		printk("sdhic:alloc host success!\n");
 	}
 	sc = sdhci_priv(host);
 

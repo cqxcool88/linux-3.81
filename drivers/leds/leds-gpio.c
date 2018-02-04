@@ -237,7 +237,7 @@ static int gpio_led_probe(struct platform_device *pdev)
 	struct gpio_leds_priv *priv;
 	struct pinctrl *pinctrl;
 	int i, ret = 0;
-
+printk("gpio:leds...\n");
 	pinctrl = devm_pinctrl_get_select_default(&pdev->dev);
 	if (IS_ERR(pinctrl))
 		dev_warn(&pdev->dev,

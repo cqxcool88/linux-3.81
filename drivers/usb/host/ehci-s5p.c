@@ -94,7 +94,7 @@ static int s5p_ehci_probe(struct platform_device *pdev)
 	struct resource *res;
 	int irq;
 	int err;
-
+printk("ehci:s5p_ehciprobe...\n\n");
 	pdata = pdev->dev.platform_data;
 	if (!pdata) {
 		dev_err(&pdev->dev, "No platform data defined\n");
